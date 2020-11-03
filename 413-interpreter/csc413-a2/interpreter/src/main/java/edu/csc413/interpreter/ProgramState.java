@@ -16,12 +16,10 @@ import java.util.*;
  */
 public class ProgramState {
 
-    private final Map<String, List<String>> Params = new HashMap<>();
-    private final Map<String, List<Statement>> States = new HashMap<>();
-
-
     private final Map<String,Integer> variableExpressionMap;
 
+    private final Map<String, List<String>> functionParameters = new HashMap<>();
+    private final Map<String, List<Statement>> functionStatements = new HashMap<>();
 
     private final Stack<Map<String, Integer>> state = new Stack<>();
     private int value = 0;
@@ -52,14 +50,13 @@ public class ProgramState {
     public void addNewCallFrame() {
         // TODO: Implement.
 
-        Map<String, Integer> newMap = new HashMap();
-        state.push(newMap);
+        Map<String, Integer> map = new HashMap();
+        state.push(map);
     }
 
     public void removeCurrentCallFrame() {
         // TODO: Implement.
-        state.pop();
-
+        //callFrames.pop();
     }
 
 
@@ -67,28 +64,28 @@ public class ProgramState {
     //       function name, along with the corresponding instance variables.
 
     public void setFunctionParameter(String functionName, List<String> paramName){
-        if(!Params.containsKey(functionName))
-         Params.put(functionName, paramName);
+        if(!functionParameters.containsKey(functionName))
+         functionParameters.put(functionName, paramName);
     }
     public List<String> getFunctionParameter(String name){
-        return Params.get(name);
+        return functionParameters.get(name);
     }
     // TODO: Define and implement methods for setting and retrieving a function's list of Statements representing its
     //       body given the function name, along with the corresponding instance variables.
 
 
 
-    public List<Statement> getStates(String name) {
-        return States.get(name);
+    public List<Statement> getFunctionStatements(String name) {
+        return functionStatements.get(name);
     }
 
-    public void setFunctionStatement(String functionName, List<Statement> States) {
+    public void setFunctionStatement(String functionName, List<Statement> functionStatements) {
     }
 
 
     public boolean hasReturnValue() {
         // TODO: Implement.
-        return ValReturn;
+        return hasReturnValue;
     }
 
     public int getReturnValue() {
@@ -98,13 +95,13 @@ public class ProgramState {
 
     public void setReturnValue(int value) {
         // TODO: Implement.
-        ValReturn = true;
+        hasReturnValue = true;
         this.value = value;
     }
 
     public void clearReturnValue() {
         // TODO: Implement.
-        ValReturn = false;
+        hasReturnValue = false;
         this.value = 0;
     }
 
